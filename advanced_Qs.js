@@ -1,3 +1,4 @@
+// a basic promise
 let myPromise = new Promise(function(myResolve, myReject) {
     let x = 1;
     console.log("hi!")
@@ -21,7 +22,7 @@ let myPromise = new Promise(function(myResolve, myReject) {
   );
   console.log("hi!")
   
-
+// a promise that waits before returning a value
 let pinkyPromise = new Promise(function(myResolve, myReject) {
     setTimeout(function() { myResolve("hi!!"); }, 10*1000);
   });
@@ -37,6 +38,7 @@ let pinkyPromise = new Promise(function(myResolve, myReject) {
     function(error) {console.log("error");},
   );
 
+  // a chained promise
  let strung_out_promise = new Promise(function (resolve, reject) {
     setTimeout(() => resolve(100), 1500); // (*)
   }).then(function (result) { // (**)
@@ -51,7 +53,7 @@ let pinkyPromise = new Promise(function(myResolve, myReject) {
     console.log(result)
   });
 
-
+   // a chained promise that calculates part of the fibbonaci sequence.
   let fibbonaci = new Promise(function (resolve, reject) {
     setTimeout(() => resolve(1), 1500); // (*)
   }).then(function (result) { // (**)
@@ -71,12 +73,45 @@ let pinkyPromise = new Promise(function(myResolve, myReject) {
   });
 
 
-
+  // an async function, a function that returns a promise
   async function myFunction() {
     return "The Incredibles";
   }
   myFunction().then(
     function(value) {console.log(value);}
+
   );
   
-  
+  //this promise is returned by another function
+  function returnPromise(){
+  return iteratedPromise = new Promise(function(myResolve) {
+    setTimeout(function() { myResolve("the incredibles"); });
+  }).then(function (value) { // (**)
+    console.log(value); // 2
+  })
+}
+
+
+returnPromise();
+//a function that returns a promise is basically identical to an async function. Async functions 
+// are defined as functions that return promises, and so asking to create a function that returns a promise
+// and asking to create an async function are the same thing. =
+
+// an async function using an await keyword
+async function emperorAsync(input) {
+  let thisPromise = new Promise(function(resolve, reject) {
+    if(input==0){
+      resolve("I am asynchronous, grovel before me!");
+    }
+    else{
+      reject("I am but a lowly function.")
+    }
+  });
+  let returnedValue = await thisPromise;
+  console.log(returnedValue)
+}
+
+emperorAsync(0);
+
+// a variable equal to an earlier promise.
+let tricky = returnPromise()
